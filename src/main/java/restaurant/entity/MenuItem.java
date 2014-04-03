@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,15 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ndaley
  */
 @Entity
-@Table(name = "menuitems")
+@Table(name = "menuitem")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Menuitems.findAll", query = "SELECT m FROM Menuitems m"),
-    @NamedQuery(name = "Menuitems.findByMenuItemID", query = "SELECT m FROM Menuitems m WHERE m.menuItemID = :menuItemID"),
-    @NamedQuery(name = "Menuitems.findByName", query = "SELECT m FROM Menuitems m WHERE m.name = :name"),
-    @NamedQuery(name = "Menuitems.findByPrice", query = "SELECT m FROM Menuitems m WHERE m.price = :price"),
-    @NamedQuery(name = "Menuitems.findByVersion", query = "SELECT m FROM Menuitems m WHERE m.version = :version")})
-public class Menuitems implements Serializable {
+    @NamedQuery(name = "MenuItem.findAll", query = "SELECT m FROM MenuItem m"),
+    @NamedQuery(name = "MenuItem.findByMenuItemID", query = "SELECT m FROM MenuItem m WHERE m.menuItemID = :menuItemID"),
+    @NamedQuery(name = "MenuItem.findByName", query = "SELECT m FROM MenuItem m WHERE m.name = :name"),
+    @NamedQuery(name = "MenuItem.findByPrice", query = "SELECT m FROM MenuItem m WHERE m.price = :price"),
+    @NamedQuery(name = "MenuItem.findByVersion", query = "SELECT m FROM MenuItem m WHERE m.version = :version")})
+public class MenuItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,12 +48,13 @@ public class Menuitems implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "version")
-    private Integer version;
+    @Version
+    private int version;
 
-    public Menuitems() {
+    public MenuItem() {
     }
 
-    public Menuitems(Integer menuItemID) {
+    public MenuItem(Integer menuItemID) {
         this.menuItemID = menuItemID;
     }
 
@@ -98,10 +100,10 @@ public class Menuitems implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Menuitems)) {
+        if (!(object instanceof MenuItem)) {
             return false;
         }
-        Menuitems other = (Menuitems) object;
+        MenuItem other = (MenuItem) object;
         if ((this.menuItemID == null && other.menuItemID != null) || (this.menuItemID != null && !this.menuItemID.equals(other.menuItemID))) {
             return false;
         }
@@ -110,7 +112,7 @@ public class Menuitems implements Serializable {
 
     @Override
     public String toString() {
-        return "restaurant.entity.Menuitems[ menuItemID=" + menuItemID + " ]";
+        return "restaurant.entity.MenuItem[ menuItemID=" + menuItemID + " ]";
     }
     
 }

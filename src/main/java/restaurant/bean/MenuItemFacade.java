@@ -9,14 +9,14 @@ package restaurant.bean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import restaurant.entity.Menuitems;
+import restaurant.entity.MenuItem;
 
 /**
  *
  * @author ndaley
  */
 @Stateless
-public class MenuitemsFacade extends AbstractFacade<Menuitems> {
+public class MenuItemFacade extends AbstractFacade<MenuItem> {
     @PersistenceContext(unitName = "com.mycompany_Restaurant_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -25,8 +25,8 @@ public class MenuitemsFacade extends AbstractFacade<Menuitems> {
         return em;
     }
 
-    public MenuitemsFacade() {
-        super(Menuitems.class);
+    public MenuItemFacade() {
+        super(MenuItem.class);
     }
     
 }
