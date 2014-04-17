@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMenuitemsTitle}"/>
+        </ui:define>
+        <ui:define name="body">
+            
+            <!-- Error message panel -->
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <h:form id="form">
+                <!-- Menu Item DataTable -->
+                <p:dataTable id="menuItemTable" var="menuItem" value="#{menuItemBean.menuItems}"
+                             paginator="true" rows="10" rowsPerPageTemplate="10,20,25" 
+                             pageLinks="5" sortMode="multiple" resizableColumns="true"
+                             editable="true" filteredValue="#{menuItemBean.filteredMenuItems}" >
+                    <f:facet name="header">
+                        <h:outputText value="Menu Data"/>
+                        
+                    </f:facet>
+                    <p:column headerText="Id" sortBy="menuItemID" filterBy="menuItemID">  
+                        <h:outputText value="#{menuItem.menuItemID}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Name" sortBy="name" filterBy="name">  
+                        
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{menuItem.name}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{menuItem.name}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Price" sortBy="price" filterBy="price">  
+                        
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{menuItem.price}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{menuItem.price}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Version" sortBy="version" filterBy="version">  
+                        <h:outputText value="#{menuItem.version}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Edit" style="width:3%">  
+                        <p:rowEditor />  
+                    </p:column>
+                    <p:column style="width:3%" headerText="View">  
+                            <p:commandButton id="selectButton" update=":form:display" oncomplete="PF('menuItemDialog').show()" icon="ui-icon-search" title="View">  
+                                <f:setPropertyActionListener value="#{menuItem}" target="#{menuItemBean.selected}" />  
+                        </p:commandButton>  
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <h:outputText value="Found #{menuItemBean.menuItems.size()} records"/>
+                    </f:facet>
+                </p:dataTable>
+                <!-- End DataTable -->
+                
+                <!-- Dialog(Window) shown on "View" button click -->
+                <p:dialog header="Actor Info" widgetVar="menuItemDialog" resizable="false" 
+                          id="carDlg" showEffect="blind" hideEffect="blind">  
+  
+                    <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
+
+                        <f:facet name="header">  
+                            <p:graphicImage value="http://www.politicspa.com/wp-content/uploads/2013/12/Silhouette-question-mark.jpeg" 
+                                            style="height: 60%; width: 50%;"/>
+                        </f:facet>  
+
+                        <h:outputText value="Id:" />  
+                        <h:outputText value="#{menuItemBean.selected.menuItemID}" style="font-weight:bold"/>  
+
+                        <h:outputText value="First Name:" />  
+                        <h:outputText value="#{menuItemBean.selected.name}" style="font-weight:bold"/>  
+
+
+                        <h:outputText value="Last Name:" />  
+                        <h:outputText value="#{menuItemBean.selected.price}" style="font-weight:bold"/>  
+
+                        <h:outputText value="Last Updated:" />  
+                        <h:outputText value="#{menuItemBean.selected.version}" style="font-weight:bold"/>  
+                    </h:panelGrid>
+                </p:dialog>
+                <!-- End "View" Dialog -->
+                
+                <h:link outcome="/index" value="#{bundle.ListMenuitemsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
