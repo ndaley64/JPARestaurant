@@ -1,3 +1,4 @@
+CREATE SCHEMA restaurant;
 USE restaurant;
 CREATE TABLE `users` (
   `username` varchar(255) NOT NULL,
@@ -21,3 +22,14 @@ INSERT INTO users VALUES('tom@isp.com','1dca67581a5f684be074b6f130c405e57d85278d
 INSERT INTO authorities VALUES('bob@isp.com','ROLE_ADMIN',1);
 INSERT INTO authorities VALUES('sally@isp.com','ROLE_USER',2);
 INSERT INTO authorities VALUES('tom@isp.com','ROLE_USER',3);
+CREATE  TABLE `restaurant`.`menuitem` (
+  `menuItemID` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL ,
+  `price` DECIMAL(7,2) NULL ,
+  `version` INT NULL DEFAULT 1 ,
+  PRIMARY KEY (`menuItemID`) ,
+  UNIQUE INDEX `menuItemID_UNIQUE` (`menuItemID` ASC) );
+INSERT INTO `restaurant`.`menuitem` (`name`, `price`) VALUES ('burger', '1.99');
+INSERT INTO `restaurant`.`menuitem` (`name`, `price`) VALUES ('fries', '.99');
+INSERT INTO `restaurant`.`menuitem` (`name`, `price`) VALUES ('soda', '.49');
+

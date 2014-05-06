@@ -16,28 +16,32 @@ and open the template in the editor.
             <h:outputText value="#{bundle.ListMenuitemsTitle}"/>
         </ui:define>
         <ui:define name="body">
-            
+
             <!-- Error message panel -->
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            
+
             <h:form id="form">
                 <!-- Menu Item DataTable -->
+                <p:growl id="messages" showDetail="true"/>
+
+
+
                 <p:dataTable id="menuItemTable" var="menuItem" value="#{menuItemBean.menuItems}"
                              paginator="true" rows="10" rowsPerPageTemplate="10,20,25" 
                              pageLinks="5" sortMode="multiple" resizableColumns="true"
                              editable="true" filteredValue="#{menuItemBean.filteredMenuItems}" >
                     <f:facet name="header">
                         <h:outputText value="Menu Data"/>
-                        
+
                     </f:facet>
                     <p:column headerText="Id" sortBy="menuItemID" filterBy="menuItemID">  
                         <h:outputText value="#{menuItem.menuItemID}"/>
                     </p:column>
-                    
+
                     <p:column headerText="Name" sortBy="name" filterBy="name">  
-                        
+
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{menuItem.name}" />
@@ -49,7 +53,7 @@ and open the template in the editor.
                     </p:column>
 
                     <p:column headerText="Price" sortBy="price" filterBy="price">  
-                        
+
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{menuItem.price}" />
@@ -63,26 +67,29 @@ and open the template in the editor.
                     <p:column headerText="Version" sortBy="version" filterBy="version">  
                         <h:outputText value="#{menuItem.version}"/>
                     </p:column>
-                    
+
                     <p:column headerText="Edit" style="width:3%">  
                         <p:rowEditor />  
                     </p:column>
                     <p:column style="width:3%" headerText="View">  
-                            <p:commandButton id="selectButton" update=":form:display" oncomplete="PF('menuItemDialog').show()" icon="ui-icon-search" title="View">  
-                                <f:setPropertyActionListener value="#{menuItem}" target="#{menuItemBean.selected}" />  
+                        <p:commandButton id="selectButton" update=":form:display" oncomplete="PF('menuItemDialog').show()" icon="ui-icon-search" title="View">  
+                            <f:setPropertyActionListener value="#{menuItem}" target="#{menuItemBean.selected}" />  
                         </p:commandButton>  
                     </p:column>
-                    
+
                     <f:facet name="footer">
                         <h:outputText value="Found #{menuItemBean.menuItems.size()} records"/>
                     </f:facet>
+
+                    <p:ajax event="rowEdit" listener="#{menuItemBean.onEdit}" update=":form:messages" />
+
                 </p:dataTable>
                 <!-- End DataTable -->
-                
+
                 <!-- Dialog(Window) shown on "View" button click -->
                 <p:dialog header="Actor Info" widgetVar="menuItemDialog" resizable="false" 
                           id="carDlg" showEffect="blind" hideEffect="blind">  
-  
+
                     <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">  
 
                         <f:facet name="header">  
@@ -105,7 +112,7 @@ and open the template in the editor.
                     </h:panelGrid>
                 </p:dialog>
                 <!-- End "View" Dialog -->
-                
+
                 <h:link outcome="/index" value="#{bundle.ListMenuitemsIndexLink}"/>
             </h:form>
         </ui:define>

@@ -26,4 +26,8 @@ public class MenuItemController implements Serializable{
     public List<MenuItem> getAllMenuItems(){
         return ejbFacade.findAll();
     }
+    
+    public void EditMenuItem(MenuItem mi){
+        ejbFacade.edit(mi);
+    }
 }

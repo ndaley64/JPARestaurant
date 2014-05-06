@@ -11,7 +11,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.primefaces.event.RowEditEvent;
 import restaurant.entity.MenuItem;
 import restaurant.jsf.MenuItemController;
 
@@ -66,6 +69,16 @@ public class MenuItemBean implements Serializable{
 
     public void setFilteredMenuItems(List<MenuItem> filteredMenuItems) {
         this.filteredMenuItems = filteredMenuItems;
+    }
+    
+    public void onEdit(RowEditEvent event) {
+        MenuItem edited = ((MenuItem) event.getObject());
+        
+        mic.EditMenuItem(edited);
+        
+        FacesMessage msg = new FacesMessage("MenuItem Edited", edited.toString());
+ 
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
 }
